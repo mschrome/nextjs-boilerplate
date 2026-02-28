@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"net/http"
 	"runtime"
 	"time"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 type response struct {
@@ -15,14 +17,34 @@ type response struct {
 	Now       string `json:"now"`
 }
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.Header().Set("Cache-Control", "no-store")
-	_ = json.NewEncoder(w).Encode(response{
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	payload, err := json.Marshal(response{
 		OK:        true,
 		Runtime:   "netlify-functions-go",
 		GoVersion: runtime.Version(),
-		Path:      r.URL.Path,
+		Path:      request.Path,
 		Now:       time.Now().UTC().Format(time.RFC3339),
 	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: 500,
+			Headers: map[string]string{
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			Body: `{"ok":false,"error":"failed to encode response"}`,
+		}, nil
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Headers: map[string]string{
+			"Content-Type":  "application/json; charset=utf-8",
+			"Cache-Control": "no-store",
+		},
+		Body: string(payload),
+	}, nil
+}
+
+func main() {
+	lambda.Start(handler)
 }
