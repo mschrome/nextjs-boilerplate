@@ -53,15 +53,15 @@ const vercelFunctionExamples: ExampleItem[] = [
 const netlifyRuntimeExamples: ExampleItem[] = [
   {
     name: "Netlify Function（Node.js）",
-    path: "/.netlify/functions/runtime-node",
+    path: "/runtime/netlify-node",
     hint: "使用 Netlify Functions（Node）返回 process.version",
-    note: "仅在 Netlify / netlify dev 下可用",
+    note: "对外使用友好路由，内部重写到 /.netlify/functions/runtime-node",
   },
   {
     name: "Netlify Function（Go）",
-    path: "/.netlify/functions/runtime-go",
+    path: "/runtime/netlify-go",
     hint: "使用 Netlify Go Function（Lambda 入口）",
-    note: "仅在 Netlify / netlify dev 下可用",
+    note: "对外使用友好路由，内部重写到 /.netlify/functions/runtime-go",
   },
   {
     name: "Netlify Edge Function（Deno）",

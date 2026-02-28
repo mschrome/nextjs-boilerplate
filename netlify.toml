@@ -1,0 +1,14 @@
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/runtime/netlify-node"
+  to = "/.netlify/functions/runtime-node"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/runtime/netlify-go"
+  to = "/.netlify/functions/runtime-go"
+  status = 200
+  force = true
