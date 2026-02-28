@@ -71,6 +71,27 @@ const netlifyRuntimeExamples: ExampleItem[] = [
   },
 ];
 
+const cloudflareRuntimeExamples: ExampleItem[] = [
+  {
+    name: "Cloudflare Pages Function（Workers Runtime）",
+    path: "/runtime/cf-workers",
+    hint: "基础 onRequest 示例，返回请求方法与路径",
+    note: "仅在 Cloudflare Pages / wrangler pages dev 下可用",
+  },
+  {
+    name: "Cloudflare Web Crypto",
+    path: "/runtime/cf-crypto",
+    hint: "使用 Workers 内置 crypto.subtle 计算哈希",
+    note: "仅在 Cloudflare Pages / wrangler pages dev 下可用",
+  },
+  {
+    name: "Cloudflare Node.js Compat",
+    path: "/runtime/cf-node-compat",
+    hint: "验证 nodejs_compat（Buffer/process）可用性",
+    note: "已在 wrangler.toml 配置 nodejs_compat",
+  },
+];
+
 function Section({
   title,
   items,
@@ -116,6 +137,7 @@ export default function Home() {
       <Section title="Next.js Route Handlers（本地 next dev 可测）" items={nextRuntimeExamples} />
       <Section title="多语言 Vercel Functions（部署或 vercel dev 可测）" items={vercelFunctionExamples} />
       <Section title="Netlify Runtime 用例（部署或 netlify dev 可测）" items={netlifyRuntimeExamples} />
+      <Section title="Cloudflare Pages Functions（部署或 wrangler pages dev 可测）" items={cloudflareRuntimeExamples} />
     </main>
   );
 }
