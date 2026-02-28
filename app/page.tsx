@@ -58,12 +58,6 @@ const netlifyRuntimeExamples: ExampleItem[] = [
     note: "仅在 Netlify / netlify dev 下可用",
   },
   {
-    name: "Netlify Function（Go）",
-    path: "/.netlify/functions/runtime-go",
-    hint: "使用 Netlify Functions（Go）返回 runtime.Version()",
-    note: "仅在 Netlify / netlify dev 下可用",
-  },
-  {
     name: "Netlify Edge Function（Deno）",
     path: "/runtime/netlify-edge",
     hint: "使用 Netlify Edge Runtime（Deno）",
