@@ -1,4 +1,4 @@
-export async function handler(event) {
+exports.handler = async (event) => {
   return {
     statusCode: 200,
     headers: {
@@ -13,4 +13,4 @@ export async function handler(event) {
       now: new Date().toISOString(),
     }),
   };
-}
+};
