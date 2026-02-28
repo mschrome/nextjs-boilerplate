@@ -50,6 +50,27 @@ const vercelFunctionExamples: ExampleItem[] = [
   },
 ];
 
+const netlifyRuntimeExamples: ExampleItem[] = [
+  {
+    name: "Netlify Function（Node.js）",
+    path: "/.netlify/functions/runtime-node",
+    hint: "使用 Netlify Functions（Node）返回 process.version",
+    note: "仅在 Netlify / netlify dev 下可用",
+  },
+  {
+    name: "Netlify Function（Go）",
+    path: "/.netlify/functions/runtime-go",
+    hint: "使用 Netlify Functions（Go）返回 runtime.Version()",
+    note: "仅在 Netlify / netlify dev 下可用",
+  },
+  {
+    name: "Netlify Edge Function（Deno）",
+    path: "/runtime/netlify-edge",
+    hint: "使用 Netlify Edge Runtime（Deno）",
+    note: "仅在 Netlify / netlify dev 下可用",
+  },
+];
+
 function Section({
   title,
   items,
@@ -86,14 +107,15 @@ function Section({
 export default function Home() {
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-16">
-      <h1 className="text-2xl font-semibold">Vercel Runtime / Functions 示例</h1>
+      <h1 className="text-2xl font-semibold">Runtime / Functions 示例（Vercel + Netlify）</h1>
       <p className="mt-3 text-sm text-black/70 dark:text-white/70">
-        Vercel 支持多种函数 runtime。这里分别提供 Next Route Handlers 与多语言 Vercel
-        Functions 示例。
+        这里提供 Next.js Route Handlers、Vercel 多语言 Functions，以及 Netlify
+        Functions/Edge Functions 的对照用例。
       </p>
 
       <Section title="Next.js Route Handlers（本地 next dev 可测）" items={nextRuntimeExamples} />
       <Section title="多语言 Vercel Functions（部署或 vercel dev 可测）" items={vercelFunctionExamples} />
+      <Section title="Netlify Runtime 用例（部署或 netlify dev 可测）" items={netlifyRuntimeExamples} />
     </main>
   );
 }
