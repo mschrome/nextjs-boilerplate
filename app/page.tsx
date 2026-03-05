@@ -131,7 +131,10 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const params = await searchParams;
-  const t = typeof params.t === "string" ? params.t : undefined;
+  const entries = Object.entries(params).map(([key, val]) => [
+    key,
+    Array.isArray(val) ? val.join(", ") : val ?? "",
+  ]);
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-16">
@@ -141,17 +144,31 @@ export default async function Home({
         Functions/Edge Functions 的对照用例。
       </p>
 
-      {/* SSR 参数测试：访问 ?t=xxx 即可看到 */}
+      {/* SSR 参数测试 */}
       <section className="mt-6 rounded-xl border border-blue-300 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-950">
-        <p className="text-sm font-medium">SSR Query 参数测试</p>
-        <p className="mt-1 text-sm">
-          当前 <code className="rounded bg-black/10 px-1 dark:bg-white/10">?t</code> 的值：
-          {t ? (
-            <span className="ml-1 font-mono font-semibold text-blue-600 dark:text-blue-400">{t}</span>
-          ) : (
-            <span className="ml-1 text-black/50 dark:text-white/50">（未传参，试试访问 ?t=hello）</span>
-          )}
-        </p>
+        <p className="text-sm font-medium">SSR Query 参数测试（共 {entries.length} 个参数）</p>
+        {entries.length > 0 ? (
+          <div className="mt-3 max-h-96 overflow-auto rounded border text-xs">
+            <table className="w-full text-left">
+              <thead className="sticky top-0 bg-blue-100 dark:bg-blue-900">
+                <tr>
+                  <th className="px-2 py-1 font-medium">Key</th>
+                  <th className="px-2 py-1 font-medium">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {entries.map(([key, val]) => (
+                  <tr key={key} className="border-t border-blue-200 dark:border-blue-800">
+                    <td className="whitespace-nowrap px-2 py-1 font-mono text-blue-700 dark:text-blue-300">{key}</td>
+                    <td className="break-all px-2 py-1">{val || <span className="text-black/30 dark:text-white/30">（空）</span>}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="mt-2 text-sm text-black/50 dark:text-white/50">未传任何参数，试试在 URL 后加 ?t=hello&name=world</p>
+        )}
       </section>
 
       <Section title="Next.js Route Handlers（本地 next dev 可测）" items={nextRuntimeExamples} />
