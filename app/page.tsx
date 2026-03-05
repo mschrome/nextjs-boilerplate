@@ -125,7 +125,14 @@ function Section({
   );
 }
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const t = typeof params.t === "string" ? params.t : undefined;
+
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-16">
       <h1 className="text-2xl font-semibold">Runtime / Functions 示例（Vercel + Netlify）</h1>
@@ -133,6 +140,19 @@ export default function Home() {
         这里提供 Next.js Route Handlers、Vercel 多语言 Functions，以及 Netlify
         Functions/Edge Functions 的对照用例。
       </p>
+
+      {/* SSR 参数测试：访问 ?t=xxx 即可看到 */}
+      <section className="mt-6 rounded-xl border border-blue-300 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-950">
+        <p className="text-sm font-medium">SSR Query 参数测试</p>
+        <p className="mt-1 text-sm">
+          当前 <code className="rounded bg-black/10 px-1 dark:bg-white/10">?t</code> 的值：
+          {t ? (
+            <span className="ml-1 font-mono font-semibold text-blue-600 dark:text-blue-400">{t}</span>
+          ) : (
+            <span className="ml-1 text-black/50 dark:text-white/50">（未传参，试试访问 ?t=hello）</span>
+          )}
+        </p>
+      </section>
 
       <Section title="Next.js Route Handlers（本地 next dev 可测）" items={nextRuntimeExamples} />
       <Section title="多语言 Vercel Functions（部署或 vercel dev 可测）" items={vercelFunctionExamples} />
